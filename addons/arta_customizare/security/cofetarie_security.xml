@@ -1,0 +1,9 @@
+<odoo>
+
+    <!-- Grup tehnic pentru acces intercompany -->
+    <record id="group_intercompany_sync_user" model="res.groups">
+        <field name="name">Intercompany Sync User</field>
+        <field name="category_id" ref="base.module_category_hidden"/>
+    </record>
+
+</odoo>

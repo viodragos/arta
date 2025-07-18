@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+
+    <!-- 1. Acțiunea pentru generarea raportului PDF -->
+    <record id="action_production_report" model="ir.actions.report">
+        <field name="name">Raport de Producție</field>
+        <field name="model">mrp.production</field>
+        <field name="report_type">qweb-pdf</field>
+        <field name="report_name">auto_lot_reception.production_report_template</field>
+        <field name="print_report_name">(object.name or 'Raport_Producție') + '.pdf'</field>
+    </record>
+
+    <!-- 2. Butonul din formularul de producție -->
+    <record id="button_production_report" model="ir.ui.view">
+        <field name="name">mrp.production.report.button</field>
+        <field name="model">mrp.production</field>
+        <field name="inherit_id" ref="mrp.mrp_production_form_view"/>
+        <field name="arch" type="xml">
+            <xpath expr="//header" position="inside">
+                <button name="%(action_production_report)d"
+                        type="action"
+                        string="Generează Raport PDF"
+                        class="oe_highlight"/>
+            </xpath>
+        </field>
+    </record>
+
+</odoo>

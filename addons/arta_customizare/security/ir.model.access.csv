@@ -1,0 +1,7 @@
+"id","name","model_id:id","group_id:id","perm_read","perm_write","perm_create","perm_unlink"
+access_stock_move_line_user,access.stock.move.line.user,model_stock_move_line,base.group_user,1,1,1,1
+access_sale_order_user,sale.order,sale.model_sale_order,base.group_user,1,1,1,0
+access_purchase_order_user,purchase.order,purchase.model_purchase_order,base.group_user,1,1,1,0
+access_stock_picking_user,stock.picking,stock.model_stock_picking,base.group_user,1,1,1,0
+access_stock_move_line_user,stock.move.line,stock.model_stock_move_line,base.group_user,1,1,1,0
+access_mrp_production_user,mrp.production,mrp.model_mrp_production,base.group_user,1,1,1,0

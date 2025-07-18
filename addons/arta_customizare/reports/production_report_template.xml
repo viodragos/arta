@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <template id="production_report_template">
+        <t t-call="web.html_container">
+            <t t-foreach="docs" t-as="production">
+                <div class="page">
+                    <h2>Raport de Producție - <t t-esc="production.name"/></h2>
+                    <p><strong>Data:</strong> <t t-esc="date_today"/></p>
+                    <p><strong>Produs Finisat:</strong> <t t-esc="production.product_id.name"/></p>
+                    <p><strong>Cantitate:</strong> <t t-esc="production.product_qty"/></p>
+                    <p><strong>Materii Prime Utilizate:</strong></p>
+                    <ul>
+                        <t t-foreach="production.move_raw_ids" t-as="component">
+                            <li><t t-esc="component.product_id.name"/> - <t t-esc="component.product_uom_qty"/> <t t-esc="component.product_uom.name"/></li>
+                        </t>
+                    </ul>
+                    <p><strong>Responsabil:</strong> <t t-esc="production.user_id.name"/></p>
+                </div>
+            </t>
+        </t>
+    </template>
+</odoo>

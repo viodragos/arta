@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+
+    <!-- ✅ Extindere view pentru sale.order (comenzi de vânzare) -->
+    <record id="view_order_form_inherit_cofetarie" model="ir.ui.view">
+        <field name="name">sale.order.form.inherit.cofetarie</field>
+        <field name="model">sale.order</field>
+        <field name="inherit_id" ref="sale.view_order_form"/>
+        <field name="arch" type="xml">
+            <!-- Poziționăm un eventual buton în antet (de lăsat inactiv pentru moment) -->
+            <xpath expr="//header" position="inside">
+               <!-- <button name="action_generate_po_intercompany"
+                        string="Generează PO Intercompany"
+                        type="object"
+                        class="btn-primary"
+                        invisible="1"/> -->
+            </xpath>
+        </field>
+    </record>
+
+    <!-- ✅ Extindere view pentru purchase.order (comenzi de achiziție) -->
+    <record id="view_purchase_order_form_inherit_cofetarie" model="ir.ui.view">
+        <field name="name">purchase.order.form.inherit.cofetarie</field>
+        <field name="model">purchase.order</field>
+        <field name="inherit_id" ref="purchase.purchase_order_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//sheet/notebook" position="inside">
+                <page string="Intercompany Info">
+                    <field name="origin"/>
+                    <label for="company_id"/>
+                    <field name="company_id" readonly="1"/>
+                </page>
+            </xpath>
+        </field>
+    </record>
+
+    <!-- ✅ Extindere view pentru stock.picking (transferuri de stoc) -->
+    <record id="view_stock_picking_form_inherit_cofetarie" model="ir.ui.view">
+        <field name="name">stock.picking.form.inherit.cofetarie</field>
+        <field name="model">stock.picking</field>
+        <field name="inherit_id" ref="stock.view_picking_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//sheet/notebook" position="inside">
+                <page string="Loturi Intercompany">
+                    <field name="origin"/>
+                    <field name="company_id" readonly="1"/>
+                </page>
+            </xpath>
+        </field>
+    </record>
+
+    <!-- ✅ Vedere tree personalizată pentru debug trasabilitate -->
+    <record id="view_stock_move_line_list_custom_cofetarie" model="ir.ui.view">
+        <field name="name">stock.move.line.list.custom.cofetarie</field>
+        <field name="model">stock.move.line</field>
+        <field name="type">list</field>
+        <field name="arch" type="xml">
+            <list string="Mișcări de Stoc (cu Lot)">
+                <field name="product_id"/>
+                <field name="lot_id"/>
+                <field name="quantity_product_uom"/>
+                <field name="location_id"/>
+                <field name="location_dest_id"/>
+                <field name="picking_id"/>
+                <field name="company_id"/>
+            </list>
+        </field>
+    </record>
+
+    <!-- ✅ Acțiune de fereastră pentru acces rapid -->
+    <record id="action_stock_move_line_custom" model="ir.actions.act_window">
+        <field name="name">Mișcări de Stoc - Loturi</field>
+        <field name="res_model">stock.move.line</field>
+        <field name="view_mode">list,form</field>
+        <field name="view_id" ref="view_stock_move_line_list_custom_cofetarie"/>
+        <field name="context">{}</field>
+    </record>
+
+    <!-- ✅ Meniu pentru acces din Inventory -->
+    <menuitem id="menu_stock_move_line_custom"
+            name="Mișcări de Stoc - Loturi"
+            parent="stock.menu_stock_warehouse_mgmt"
+            action="action_stock_move_line_custom"
+            sequence="99"/>
+
+    <!-- ✅ Extindere view pentru mrp.production (ordine de producție) -->
+    <record id="view_mrp_production_form_inherit_cofetarie" model="ir.ui.view">
+        <field name="name">mrp.production.form.inherit.cofetarie</field>
+        <field name="model">mrp.production</field>
+        <field name="inherit_id" ref="mrp.mrp_production_form_view"/>
+        <field name="arch" type="xml">
+            <xpath expr="//sheet/notebook" position="inside">
+                <page string="Lot generat">
+                    <field name="lot_producing_id"/>
+                </page>
+            </xpath>
+        </field>
+    </record>
+
+</odoo>

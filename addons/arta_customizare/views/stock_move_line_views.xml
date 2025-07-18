@@ -1,0 +1,32 @@
+<odoo>
+
+    <!-- Vedere nouă (folosind tipul modern `list`) -->
+    <record id="view_stock_move_line_list_custom" model="ir.ui.view">
+        <field name="name">stock.move.line.list.custom</field>
+        <field name="model">stock.move.line</field>
+        <field name="arch" type="xml">
+            <list string="Linii de Stoc Custom">
+                <field name="product_id"/>
+                <field name="lot_name"/>
+                <field name="quantity"/>
+                <field name="location_id"/>
+                <field name="location_dest_id"/>
+                <field name="state"/>
+            </list>
+        </field>
+    </record>
+
+    <!-- Acțiune separată -->
+    <record id="action_stock_move_line_list_custom" model="ir.actions.act_window">
+        <field name="name">Linii de Stoc Custom</field>
+        <field name="res_model">stock.move.line</field>
+        <field name="view_mode">list</field>
+        <field name="view_id" ref="view_stock_move_line_list_custom"/>
+        <!-- opțional: <field name="domain">[('product_id','!=',False)]</field> -->
+    </record>
+
+    <!-- Meniu -->
+    <menuitem id="menu_stock_move_line_list_custom"
+          name="Linii de Stoc"
+          action="action_stock_move_line_list_custom"/>
+</odoo>

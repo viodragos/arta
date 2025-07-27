@@ -1,7 +1,7 @@
 {
     'name': 'Auto Lot Reception',
     'version': '1.0',
-    'summary': 'Generare loturi si alte sustomizari Arta',
+    'summary': 'Generare loturi si alte customizari Arta',
     'author': 'Viorel Dragos',
     'category': 'Inventory',
     'depends': ['stock', 'mrp', 'stock_account','sale','purchase'],

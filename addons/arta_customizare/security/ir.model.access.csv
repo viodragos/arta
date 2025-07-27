@@ -5,3 +5,4 @@ access_purchase_order_user,purchase.order,purchase.model_purchase_order,base.gro
 access_stock_picking_user,stock.picking,stock.model_stock_picking,base.group_user,1,1,1,0
 access_stock_move_line_user,stock.move.line,stock.model_stock_move_line,base.group_user,1,1,1,0
 access_mrp_production_user,mrp.production,mrp.model_mrp_production,base.group_user,1,1,1,0
+access_arta_production_report,arta.production.report,model_report_arta_customizare_production_report,base.group_user,1,0,0,0

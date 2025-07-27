@@ -11,7 +11,7 @@ services:
         - ./postgresql:/var/lib/postgresql/data
 
   odoo18:
-    image: odoo:18
+    build: .  #image: odoo:18
     user: root
     depends_on:
       - db
@@ -30,6 +30,7 @@ services:
       # - ./entrypoint.sh:/entrypoint.sh   # if you want to install additional Python packages, uncomment this line!
       - ./addons:/mnt/extra-addons
       - ./etc:/etc/odoo
+      - ./l10n-romania:/mnt/l10n-romania
     restart: always             # run as a service
     
   pgadmin:
@@ -44,3 +45,18 @@ services:
       - "5051:80"  # Acces la pgAdmin pe http://localhost:5051
     volumes:
       - ./pgadmin:/var/lib/pgadmin
+
+  jupyter:
+    image: jupyter/datascience-notebook:latest
+    restart: always
+    ports:
+      - "8888:8888"
+    environment:
+      - JUPYTER_ENABLE_LAB=yes
+      - JUPYTER_TOKEN=admin123  # sau setează o parolă
+    volumes:
+      - ./jupyter_work:/home/jovyan/work
+      - ./migration_scripts:/home/jovyan/migration
+    command: start-notebook.sh --NotebookApp.token='admin123'
+    depends_on:
+      - db

@@ -1,16 +1,53 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <odoo>
 
-    <!-- 1. Acțiunea pentru generarea raportului PDF -->
+    <!-- 1. Acțiunea pentru generarea raportului -->
     <record id="action_production_report" model="ir.actions.report">
         <field name="name">Raport de Producție</field>
         <field name="model">mrp.production</field>
         <field name="report_type">qweb-pdf</field>
-        <field name="report_name">auto_lot_reception.production_report_template</field>
+        <field name="report_name">arta_customizare.production_report_template</field>
         <field name="print_report_name">(object.name or 'Raport_Producție') + '.pdf'</field>
     </record>
 
-    <!-- 2. Butonul din formularul de producție -->
+    <!-- 2. Acțiune pentru lista comenzilor de producție -->
+    <record id="action_production_list_for_report" model="ir.actions.act_window">
+        <field name="name">Comenzi de Producție</field>
+        <field name="res_model">mrp.production</field>
+        <field name="view_mode">tree,form</field>
+        <field name="domain">[('state', '=', 'done')]</field>
+        <field name="context">{'search_default_today': 1}</field>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">
+                Creează prima comandă de producție!
+            </p>
+            <p>
+                Aici poți vedea toate comenzile de producție finalizate și poți genera rapoarte.
+            </p>
+        </field>
+    </record>
+
+    <!-- 3. Meniu "Rapoarte" sub Manufacturing -->
+    <menuitem id="menu_production_reports_main"
+              name="Rapoarte"
+              parent="mrp.menu_mrp_root"
+              sequence="50"/>
+
+    <!-- 4. Sub-meniu pentru comenzile de producție -->
+    <menuitem id="menu_production_orders_report"
+              name="Comenzi de Producție"
+              parent="menu_production_reports_main"
+              action="action_production_list_for_report"
+              sequence="10"/>
+
+    <!-- 5. Sub-meniu pentru rapoarte zilnice -->
+    <menuitem id="menu_production_daily_report"
+              name="Raport Zilnic PDF"
+              parent="menu_production_reports_main"
+              action="action_production_report"
+              sequence="20"/>
+
+    <!-- 6. Butonul din formularul de producție (existent, dar îmbunătățit) -->
     <record id="button_production_report" model="ir.ui.view">
         <field name="name">mrp.production.report.button</field>
         <field name="model">mrp.production</field>
@@ -20,7 +57,8 @@
                 <button name="%(action_production_report)d"
                         type="action"
                         string="Generează Raport PDF"
-                        class="oe_highlight"/>
+                        class="oe_highlight"
+                        invisible="state != 'done'"/>
             </xpath>
         </field>
     </record>
